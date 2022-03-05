@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Cronus" Version="7.0.0-preview.30" />
+    <PackageReference Include="Cronus.Transport.RabbitMQ" Version="7.0.0-preview.26" />
+  </ItemGroup>
+
 </Project>

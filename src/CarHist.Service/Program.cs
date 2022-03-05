@@ -20,7 +20,7 @@ Start.WithStartupDiagnostics(App.Name, () =>
             services.AddLogging();
             services.AddHostedService<Worker>();
             services.AddCronus(hostContext.Configuration);
-            //services.AddSignalR();
+            services.AddSignalR();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
