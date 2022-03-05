@@ -5,7 +5,11 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.Service", "CarHist.Service\CarHist.Service.csproj", "{EE8B91D7-65BF-48CF-B138-2A709C27034E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarHist.UI", "CarHist.UI\CarHist.UI.csproj", "{F6E02423-BA20-4A88-A1E0-B58A69D2526A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.UI", "CarHist.UI\CarHist.UI.csproj", "{F6E02423-BA20-4A88-A1E0-B58A69D2526A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Log", "Log\Log.csproj", "{92516CBE-2DC8-4CF0-882F-137CC875F685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarHist", "CarHist\CarHist.csproj", "{8EA748D2-F661-4221-8FCE-A25007B7DDAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F6E02423-BA20-4A88-A1E0-B58A69D2526A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E02423-BA20-4A88-A1E0-B58A69D2526A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E02423-BA20-4A88-A1E0-B58A69D2526A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92516CBE-2DC8-4CF0-882F-137CC875F685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92516CBE-2DC8-4CF0-882F-137CC875F685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92516CBE-2DC8-4CF0-882F-137CC875F685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92516CBE-2DC8-4CF0-882F-137CC875F685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA748D2-F661-4221-8FCE-A25007B7DDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA748D2-F661-4221-8FCE-A25007B7DDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA748D2-F661-4221-8FCE-A25007B7DDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA748D2-F661-4221-8FCE-A25007B7DDAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
