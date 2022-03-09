@@ -1,4 +1,5 @@
 using Elders.Cronus;
+using MatBlazor;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Add services to the container
@@ -6,6 +7,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddCronus(builder.Configuration);
+builder.Services.AddMatBlazor();
 
 WebApplication app = builder.Build();
 
