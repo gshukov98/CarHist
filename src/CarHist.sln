@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Log", "Log\Log.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist", "CarHist\CarHist.csproj", "{8EA748D2-F661-4221-8FCE-A25007B7DDAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarHist.SignalRApi", "CarHist.SignalRApi\CarHist.SignalRApi.csproj", "{B7228F56-E6EA-4797-9E88-9641719F26B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.SignalRApi", "CarHist.SignalRApi\CarHist.SignalRApi.csproj", "{B7228F56-E6EA-4797-9E88-9641719F26B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

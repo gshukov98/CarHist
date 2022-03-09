@@ -1,12 +1,21 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@inject IServiceProvider ServiceProvider
+
+<Router AppAssembly="@typeof(Program).Assembly" OnNavigateAsync="@OnNavigateAsync">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
-        <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <p>Sorry, there's nothing at this address.</p>
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    private async Task OnNavigateAsync(NavigationContext context)
+    {
+        var cronusContextFactory = ServiceProvider.GetRequiredService<Elders.Cronus.MessageProcessing.CronusContextFactory>();
+        Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContext = ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Http.IHttpContextAccessor>();
+        Elders.Cronus.MessageProcessing.CronusContext cronusContext = cronusContextFactory.GetContext(HttpContext.HttpContext, ServiceProvider);
+    }
+}

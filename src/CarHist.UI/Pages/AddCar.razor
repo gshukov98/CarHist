@@ -1,0 +1,17 @@
+﻿@page "/addCar"
+<PageTitle>Add Car</PageTitle>
+
+<h1>Hello, world! Test</h1>
+<p>
+    <MatStringField @bind-Value="@make" Label="Make"></MatStringField>
+    <MatStringField @bind-Value="@model" Label="Model"></MatStringField>
+    <MatStringField @bind-Value="@vin" Label="Vin"></MatStringField>
+    <MatStringField @bind-Value="@engineType" Label="Engine Type"></MatStringField>
+</p>
+
+@code {
+    string make;
+    string model;
+    string vin;
+    string engineType;
+}

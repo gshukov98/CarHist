@@ -1,39 +1,36 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">CarHist.UI</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿
+<MatThemeProvider Theme="@theme1">
+    <MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                <MatAppBarTitle>CarHist</MatAppBarTitle>
+            </MatAppBarSection>
+            <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                @*<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                    <NavLink class="nav-link" href="admin-login">
+                    <span class="oi oi-badge" aria-hidden="true"></span> Admin
+                    </NavLink>
+                    <NavLink class="nav-link" href="login">
+                    <span class="oi oi-badge" aria-hidden="true"></span> Login
+                    </NavLink>*@
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
+                <NavLink class="nav-link" href="addCar">
+                    <span class="oi oi-badge" aria-hidden="true"></span> AddCar
+                </NavLink>
+            </MatAppBarSection>
+        </MatAppBarRow>
+    </MatAppBar>
+    </MatAppBarContainer>
+</MatThemeProvider>
 
 @code {
-    private bool collapseNavMenu = true;
+    MatTheme theme1 = new MatTheme()
+        {
+            Primary = MatThemeColors.Orange._500.Value,
+            Secondary = MatThemeColors.BlueGrey._500.Value
+        };
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
