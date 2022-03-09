@@ -10,7 +10,6 @@ namespace CarHist.Cars
 {
     public class Car : AggregateRoot<CarState>
     {
-
         private Car() { }
 
         public Car(CarId id, string make, string model, string vIN, string engineType)
@@ -22,10 +21,7 @@ namespace CarHist.Cars
 
     public class CarState : AggregateRootState<Car, CarId>
     {
-        public CarState()
-        {
-
-        }
+        public CarState() { }
 
         public override CarId Id { get; set; }
 
@@ -36,7 +32,6 @@ namespace CarHist.Cars
         public string VIN { get; set; }
 
         public string EngineType { get; set; }
-
 
         public void When(CarCreated e)
         {
