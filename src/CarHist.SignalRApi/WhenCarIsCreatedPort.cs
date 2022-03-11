@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using CarHist.Cars.Events;
 using CarHist.SignalRApi.Hubs;
 using Elders.Cronus;
 using Elders.Cronus.Discoveries;
@@ -8,7 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CarHist.SignalRApi
 {
     [DataContract(Namespace = BC.CarHist, Name = "0ac79d7e-3680-4daa-a353-38add518ef73")]
-    public class WhenCarIsCreatedPort : IPort
+    public class WhenCarIsCreatedPort : IPort,
+        IEventHandler<CarCreated>
     {
         private readonly IHubContext<CarsHub> hub;
 
@@ -17,6 +19,9 @@ namespace CarHist.SignalRApi
             hub = cronusApiAccessor.Provider.GetRequiredService<IHubContext<CarsHub>>();
         }
 
-        //TODO: Add event handlers
+        public void Handle(CarCreated @event)
+        {
+            hub.AnnounceThatCarIsCreated(new CarStateModel(@event.Id, @event.Make));
+        }
     }
 }

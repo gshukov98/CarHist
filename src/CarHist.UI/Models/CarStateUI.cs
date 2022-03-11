@@ -4,6 +4,12 @@
     {
         public CarStateUI() { }
 
+        public CarStateUI(string vIN, string make)
+        {
+            Make = make;
+            VIN = vIN;
+        }
+
         public CarStateUI(string make, string model, string vIN, string engineType)
         {
             Make = make;

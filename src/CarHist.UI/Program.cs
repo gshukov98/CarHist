@@ -1,3 +1,4 @@
+using CarHist.UI.Services;
 using Elders.Cronus;
 using MatBlazor;
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddCronus(builder.Configuration);
 builder.Services.AddMatBlazor();
+builder.Services.AddTransient<CarsProvider>();
 
 WebApplication app = builder.Build();
 

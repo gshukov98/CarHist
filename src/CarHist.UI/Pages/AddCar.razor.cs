@@ -20,6 +20,12 @@ namespace CarHist.UI.Pages
         [Inject]
         protected IPublisher<ICommand> Publisher { get; set; }
 
+
+        string make;
+        string model;
+        string vin;
+        string engineType;
+
         public void Insert()
         {
             //??
