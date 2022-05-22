@@ -1,20 +1,21 @@
 ﻿using System.Runtime.Serialization;
 using Elders.Cronus;
 
-namespace CarHist.Cars.Commands
+namespace CarHist.Cars.Events
 {
-    [DataContract(Namespace = BC.CarHist, Name = "58e78b17-27de-498d-b37a-1699853fdae8")]
-    public class CreateCar : ICommand
+    [DataContract(Namespace = BC.CarHist, Name = "7f43e019-2a33-4825-b15a-0664c75eb9bf")]
+    public class CarEdited : IEvent
     {
-        CreateCar() { }
+        CarEdited() { }
 
-        public CreateCar(CarId id, string make, string model, string vIN, string engineType)
+        public CarEdited(CarId id, string make, string model, string vin, string engineType, DateTimeOffset timestamp)
         {
             Id = id;
             Make = make;
             Model = model;
-            VIN = vIN;
+            VIN = vin;
             EngineType = engineType;
+            Timestamp = timestamp;
         }
 
         [DataMember(Order = 1)]
@@ -31,5 +32,8 @@ namespace CarHist.Cars.Commands
 
         [DataMember(Order = 5)]
         public string EngineType { get; private set; }
+
+        [DataMember(Order = 6)]
+        public DateTimeOffset Timestamp { get; private set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using Elders.Cronus;
 
 namespace CarHist.Cars.Events
@@ -11,14 +6,14 @@ namespace CarHist.Cars.Events
     [DataContract(Namespace = BC.CarHist, Name = "e9319351-0d47-4bfb-ac8d-be0cff365751")]
     public class CarCreated : IEvent
     {
-        private CarCreated() { }
+        CarCreated() { }
 
-        public CarCreated(CarId id, string make, string model, string vIN, string engineType, DateTimeOffset timestamp)
+        public CarCreated(CarId id, string make, string model, string vin, string engineType, DateTimeOffset timestamp)
         {
             Id = id;
             Make = make;
             Model = model;
-            VIN = vIN;
+            VIN = vin;
             EngineType = engineType;
             Timestamp = timestamp;
         }
