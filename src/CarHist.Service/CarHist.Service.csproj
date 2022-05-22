@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-CarHist.Service-EA2DD48E-A3B9-46B2-931C-589CCC0D31BD</UserSecretsId>
   </PropertyGroup>
