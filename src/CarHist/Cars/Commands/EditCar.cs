@@ -3,12 +3,12 @@ using Elders.Cronus;
 
 namespace CarHist.Cars.Commands
 {
-    [DataContract(Namespace = BC.CarHist, Name = "58e78b17-27de-498d-b37a-1699853fdae8")]
-    public class CreateCar : ICommand
+    [DataContract(Namespace = BC.CarHist, Name = "e68e2f82-cf6e-40a5-b32f-418a2114c173")]
+    public class EditCar : ICommand
     {
-        CreateCar() { }
+        EditCar() { }
 
-        public CreateCar(CarId id, string make, string model, string vIN, string engineType)
+        public EditCar(CarId id, string make, string model, string vIN, string engineType)
         {
             Id = id;
             Make = make;
