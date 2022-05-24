@@ -102,4 +102,9 @@ public class CarState : AggregateRootState<Car, CarId>
         VIN = e.VIN;
         EngineType = e.EngineType;
     }
+
+    public void When(HistoryAppended e)
+    {
+        History.Add(new CarHistory(e.Type, e.Description, e.Company, e.Timestamp));
+    }
 }

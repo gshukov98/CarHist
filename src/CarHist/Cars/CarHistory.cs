@@ -7,10 +7,11 @@ public class CarHistory
 {
     CarHistory() { }
 
-    public CarHistory(string type, string description, DateTimeOffset timestamp)
+    public CarHistory(string type, string description, string company, DateTimeOffset timestamp)
     {
         Type = type;
         Description = description;
+        Company = company;
         Timestamp = timestamp;
     }
 
@@ -21,5 +22,8 @@ public class CarHistory
     public string Description { get; set; }
 
     [DataMember(Order = 3)]
+    public string Company { get; set; }
+
+    [DataMember(Order = 4)]
     public DateTimeOffset Timestamp { get; set; }
 }
