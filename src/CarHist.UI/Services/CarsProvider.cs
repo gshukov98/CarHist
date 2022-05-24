@@ -1,4 +1,4 @@
-﻿using CarHist.Projections;
+﻿using CarHist.Projections.AllCarsTenant;
 using CarHist.UI.Models;
 using Elders.Cronus.Projections;
 

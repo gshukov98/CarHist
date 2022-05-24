@@ -4,7 +4,7 @@ using CarHist.Cars.Events;
 using Elders.Cronus;
 using Elders.Cronus.Projections;
 
-namespace CarHist.Projections;
+namespace CarHist.Projections.AllCarsTenant;
 
 [DataContract(Namespace = BC.CarHist, Name = "3b4f8226-8dfc-4b4e-9ff2-96b2f1b3a300")]
 public class AllCarsTenantProjection : ProjectionDefinition<AllCarsTenantProjection.Data, AllCarsByTenantId>, IProjection,
