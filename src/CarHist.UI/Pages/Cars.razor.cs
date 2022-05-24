@@ -6,49 +6,48 @@ using Elders.Cronus.Projections;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace CarHist.UI.Pages
+namespace CarHist.UI.Pages;
+
+public partial class Cars : ComponentBase
 {
-    public partial class Cars : ComponentBase
+    private HubConnection hubConnection;
+
+    [Inject]
+    protected IProjectionReader Projections { get; set; }
+
+    [Inject]
+    protected CarsProvider CarsProvider { get; set; }
+
+    [Inject]
+    protected CronusContext CronusContext { get; set; }
+
+    [Inject]
+    protected IPublisher<ICommand> Publisher { get; set; }
+
+    protected List<CarStateUI> cars = new List<CarStateUI>();
+
+    protected override async Task OnInitializedAsync()
     {
-        private HubConnection hubConnection;
+        cars = CarsProvider.GetCars().ToList();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://127.0.0.1:17677" + "/hub/cars")
+            .WithAutomaticReconnect()
+            .Build();
 
-        [Inject]
-        protected IProjectionReader Projections { get; set; }
+        hubConnection.On<string, string>("CarCreation", (carId, name) =>
+          {
+              if (cars.Any(x => x.VIN.Equals(carId) == false))
+                  cars.Add(new CarStateUI(carId, name));
 
-        [Inject]
-        protected CarsProvider CarsProvider { get; set; }
+              StateHasChanged();
+          });
 
-        [Inject]
-        protected CronusContext CronusContext { get; set; }
+        await hubConnection.StartAsync();
+    }
 
-        [Inject]
-        protected IPublisher<ICommand> Publisher { get; set; }
-
-        protected List<CarStateUI> cars = new List<CarStateUI>();
-
-        protected override async Task OnInitializedAsync()
-        {
-            cars = CarsProvider.GetCars().ToList();
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl("http://127.0.0.1:17677" + "/hub/cars")
-                .WithAutomaticReconnect()
-                .Build();
-
-            hubConnection.On<string, string>("CarCreation", (carId, name) =>
-              {
-                  if (cars.Any(x => x.VIN.Equals(carId) == false))
-                      cars.Add(new CarStateUI(carId, name));
-
-                  StateHasChanged();
-              });
-
-            await hubConnection.StartAsync();
-        }
-
-        public void Dispose()
-        {
-            if (hubConnection is not null)
-                hubConnection.DisposeAsync();
-        }
+    public void Dispose()
+    {
+        if (hubConnection is not null)
+            hubConnection.DisposeAsync();
     }
 }
