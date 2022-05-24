@@ -2,6 +2,7 @@
 using Elders.Cronus;
 
 namespace CarHist.Cars;
+
 //TODO: Should add more info about car (make, model, body type, production year, engine volume, engine power, fuel type, transmision type)
 public class Car : AggregateRoot<CarState>
 {
@@ -29,6 +30,13 @@ public class Car : AggregateRoot<CarState>
             Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
     }
 
+    public void AppendHistory(CarId id, string type, string description, string company)
+    {
+        GuardAppendHistory(id, type, description, company);
+
+        Apply(new HistoryAppended(id, type, description, company, DateTimeOffset.UtcNow));
+    }
+
     private static void Guard(CarId id, string make, string model, string vin, string engineType)
     {
         if (id is null) throw new ArgumentNullException(nameof(id));
@@ -36,6 +44,14 @@ public class Car : AggregateRoot<CarState>
         if (model is null) throw new ArgumentNullException(nameof(model));
         if (vin is null) throw new ArgumentNullException(nameof(vin));
         if (engineType is null) throw new ArgumentNullException(nameof(engineType));
+    }
+
+    private static void GuardAppendHistory(CarId id, string type, string description, string company)
+    {
+        if (id is null) throw new ArgumentNullException(nameof(id));
+        if (type is null) throw new ArgumentNullException(nameof(type));
+        if (description is null) throw new ArgumentNullException(nameof(description));
+        if (company is null) throw new ArgumentNullException(nameof(company));
     }
 }
 
@@ -52,7 +68,10 @@ static class CarStateExtensions
 
 public class CarState : AggregateRootState<Car, CarId>
 {
-    public CarState() { }
+    public CarState()
+    {
+        History = new List<CarHistory>();
+    }
 
     public override CarId Id { get; set; }
 
@@ -63,6 +82,8 @@ public class CarState : AggregateRootState<Car, CarId>
     public string VIN { get; set; }
 
     public string EngineType { get; set; }
+
+    public List<CarHistory> History { get; set; }
 
     public void When(CarCreated e)
     {
@@ -80,5 +101,10 @@ public class CarState : AggregateRootState<Car, CarId>
         Model = e.Model;
         VIN = e.VIN;
         EngineType = e.EngineType;
+    }
+
+    public void When(HistoryAppended e)
+    {
+        History.Add(new CarHistory(e.Type, e.Description, e.Company, e.Timestamp));
     }
 }
