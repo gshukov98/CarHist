@@ -4,11 +4,11 @@ using Elders.Cronus;
 namespace CarHist.Cars.Commands;
 
 [DataContract(Namespace = BC.CarHist, Name = "805999fa-d6ad-490e-8b24-f803a150fab6")]
-public class AddHistory : ICommand
+public class AppendHistory : ICommand
 {
-    AddHistory() { }
+    AppendHistory() { }
 
-    public AddHistory(CarId id, string type, string description)
+    public AppendHistory(CarId id, string type, string description)
     {
         Id = id;
         Type = type;

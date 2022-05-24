@@ -30,6 +30,11 @@ public class Car : AggregateRoot<CarState>
             Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
     }
 
+    public void AppendHistory(CarId id, string type, string description)
+    {
+
+    }
+
     private static void Guard(CarId id, string make, string model, string vin, string engineType)
     {
         if (id is null) throw new ArgumentNullException(nameof(id));
@@ -53,7 +58,10 @@ static class CarStateExtensions
 
 public class CarState : AggregateRootState<Car, CarId>
 {
-    public CarState() { }
+    public CarState()
+    {
+        History = new List<CarHistory>();
+    }
 
     public override CarId Id { get; set; }
 
@@ -64,6 +72,8 @@ public class CarState : AggregateRootState<Car, CarId>
     public string VIN { get; set; }
 
     public string EngineType { get; set; }
+
+    public List<CarHistory> History { get; set; }
 
     public void When(CarCreated e)
     {

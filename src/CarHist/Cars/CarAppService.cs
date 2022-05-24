@@ -8,7 +8,8 @@ namespace CarHist.Cars;
 [DataContract(Namespace = BC.CarHist, Name = "a4d1b415-da8f-400f-9b1d-9c92f497e9c7")]
 public class CarAppService : ApplicationService<Car>,
     ICommandHandler<CreateCar>,
-    ICommandHandler<EditCar>
+    ICommandHandler<EditCar>,
+    ICommandHandler<AppendHistory>
 {
     private readonly ILogger<CarAppService> _logger;
 
@@ -36,6 +37,23 @@ public class CarAppService : ApplicationService<Car>,
         {
             Car car = result.Data;
             car.EditCar(command.Id, command.Make, command.Model, command.VIN, command.EngineType);
+            repository.Save(car);
+        }
+        else if (result.HasError)
+        {
+            _logger.Error(() => $"Trying to edit missing aggregate id: {command.Id}");
+        }
+    }
+
+    public void Handle(AppendHistory command)
+    {
+        ReadResult<Car> result = repository.Load<Car>(command.Id);
+
+        if (result.IsSuccess)
+        {
+            Car car = result.Data;
+            car.AppendHistory(command.Id, command.Type, command.Description);
+            repository.Save(car);
         }
         else if (result.HasError)
         {
