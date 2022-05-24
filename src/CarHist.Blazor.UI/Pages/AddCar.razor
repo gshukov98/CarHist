@@ -1,0 +1,12 @@
+﻿@page "/addCar"
+<PageTitle>Add Car</PageTitle>
+
+<h1>Add Car</h1>
+<p>
+    <MatStringField @bind-Value="@make" Label="Make"></MatStringField>
+    <MatStringField @bind-Value="@model" Label="Model"></MatStringField>
+    <MatStringField @bind-Value="@vin" Label="Vin"></MatStringField>
+    <MatStringField @bind-Value="@engineType" Label="Engine Type"></MatStringField>
+    <button class="btn btn-primary" @onclick="Insert">Save</button>
+</p>
+
