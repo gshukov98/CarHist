@@ -8,11 +8,12 @@ public class HistoryAppended : IEvent
 {
     HistoryAppended() { }
 
-    public HistoryAppended(CarId id, string type, string description, DateTimeOffset timestamp)
+    public HistoryAppended(CarId id, string type, string description, string company, DateTimeOffset timestamp)
     {
         Id = id;
         Type = type;
         Description = description;
+        Company = company;
         Timestamp = timestamp;
     }
 
@@ -26,5 +27,8 @@ public class HistoryAppended : IEvent
     public string Description { get; private set; }
 
     [DataMember(Order = 4)]
+    public string Company { get; private set; }
+
+    [DataMember(Order = 5)]
     public DateTimeOffset Timestamp { get; private set; }
 }

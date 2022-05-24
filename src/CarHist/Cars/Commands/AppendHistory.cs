@@ -8,11 +8,12 @@ public class AppendHistory : ICommand
 {
     AppendHistory() { }
 
-    public AppendHistory(CarId id, string type, string description)
+    public AppendHistory(CarId id, string type, string description, string company)
     {
         Id = id;
         Type = type;
         Description = description;
+        Company = company;
     }
 
     [DataMember(Order = 1)]
@@ -23,4 +24,7 @@ public class AppendHistory : ICommand
 
     [DataMember(Order = 3)]
     public string Description { get; private set; }
+
+    [DataMember(Order = 4)]
+    public string Company { get; private set; }
 }

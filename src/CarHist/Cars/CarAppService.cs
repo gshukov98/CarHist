@@ -52,7 +52,7 @@ public class CarAppService : ApplicationService<Car>,
         if (result.IsSuccess)
         {
             Car car = result.Data;
-            car.AppendHistory(command.Id, command.Type, command.Description);
+            car.AppendHistory(command.Id, command.Type, command.Description, command.Company);
             repository.Save(car);
         }
         else if (result.HasError)

@@ -30,9 +30,11 @@ public class Car : AggregateRoot<CarState>
             Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
     }
 
-    public void AppendHistory(CarId id, string type, string description)
+    public void AppendHistory(CarId id, string type, string description, string company)
     {
+        GuardAppendHistory(id, type, description, company);
 
+        Apply(new HistoryAppended(id, type, description, company, DateTimeOffset.UtcNow));
     }
 
     private static void Guard(CarId id, string make, string model, string vin, string engineType)
@@ -42,6 +44,14 @@ public class Car : AggregateRoot<CarState>
         if (model is null) throw new ArgumentNullException(nameof(model));
         if (vin is null) throw new ArgumentNullException(nameof(vin));
         if (engineType is null) throw new ArgumentNullException(nameof(engineType));
+    }
+
+    private static void GuardAppendHistory(CarId id, string type, string description, string company)
+    {
+        if (id is null) throw new ArgumentNullException(nameof(id));
+        if (type is null) throw new ArgumentNullException(nameof(type));
+        if (description is null) throw new ArgumentNullException(nameof(description));
+        if (company is null) throw new ArgumentNullException(nameof(company));
     }
 }
 
