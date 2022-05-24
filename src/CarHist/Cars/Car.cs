@@ -2,6 +2,7 @@
 using Elders.Cronus;
 
 namespace CarHist.Cars;
+
 //TODO: Should add more info about car (make, model, body type, production year, engine volume, engine power, fuel type, transmision type)
 public class Car : AggregateRoot<CarState>
 {
