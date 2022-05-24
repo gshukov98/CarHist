@@ -1,1 +1,1 @@
-This is project for education purposes.
+This is a project for education purposes.
