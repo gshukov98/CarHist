@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.SignalRApi", "CarHi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.Tests", "CarHist.Tests\CarHist.Tests.csproj", "{B7B09E6E-8B6F-4F86-91E3-4749DBDF1FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarHist.Blazor.UI", "CarHist.Blazor.UI\CarHist.Blazor.UI.csproj", "{872A6585-D22C-4F93-9CAD-28539F3CF0FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarHist.Blazor.UI", "CarHist.Blazor.UI\CarHist.Blazor.UI.csproj", "{872A6585-D22C-4F93-9CAD-28539F3CF0FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

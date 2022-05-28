@@ -1,3 +1,12 @@
 ﻿@page "/"
 
 <h1>Welcome to CarHist</h1>
+
+<div class="container">
+    <div class="row">
+        <p>
+            <MatStringField @bind-Value="@searchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
+            <MatButton class="btn btn-primary" @onclick="Insert">Search</MatButton>
+        </p>
+    </div>
+</div>
