@@ -42,6 +42,18 @@ public partial class AdminCars : ComponentBase
               StateHasChanged();
           });
 
+        hubConnection.On<string, string>("CarEdit", (carId, name) =>
+         {
+             if (cars.Any(x => x.VIN.Equals(carId)))
+             {
+                 CarStateUI oldCar = cars.Where(x => x.VIN.Equals(carId)).FirstOrDefault();
+                 cars.Remove(oldCar);
+                 cars.Add(new CarStateUI(carId, name));
+             }
+
+             StateHasChanged();
+         });
+
         await hubConnection.StartAsync();
     }
 

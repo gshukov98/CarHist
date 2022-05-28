@@ -48,6 +48,10 @@ namespace CarHist.Blazor.UI.Pages
             var command = new EditCar(carId, car.Make, car.Model, car.VIN, car.EngineType);
             Publisher.Publish(command);
 
+            #region Don't look inside
+            Thread.Sleep(1000);
+            #endregion
+
             NavigationManager.NavigateTo("/cars");
         }
 
