@@ -16,7 +16,7 @@
         <td>@context.Model</td>
         <td>
             <MatButton Outlined="true" TrailingIcon="edit" Link="@($"/cars/edit/{@context.VIN}")">Edit</MatButton>
-            <MatButton Outlined="true" TrailingIcon="delete" Link="@($"/cars/delete/{@context.VIN}")">Delete</MatButton>
+            <MatButton Outlined="true" TrailingIcon="delete" @onclick="()=>Delete(context)">Delete</MatButton>
         </td>
     </MatTableRow>
 </MatTable>

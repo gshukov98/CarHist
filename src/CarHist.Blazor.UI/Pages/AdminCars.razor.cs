@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CarHist.Blazor.UI.Pages;
 
-public partial class Cars : ComponentBase
+public partial class AdminCars : ComponentBase
 {
     private HubConnection hubConnection;
 
@@ -49,5 +49,11 @@ public partial class Cars : ComponentBase
     {
         if (hubConnection is not null)
             hubConnection.DisposeAsync();
+    }
+
+    //TODO: Implement delete
+    public void Delete(CarStateUI car)
+    {
+
     }
 }
