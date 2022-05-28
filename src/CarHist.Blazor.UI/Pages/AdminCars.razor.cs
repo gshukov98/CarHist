@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CarHist.Blazor.UI.Pages;
 
-public partial class Cars : ComponentBase
+public partial class AdminCars : ComponentBase
 {
     private HubConnection hubConnection;
 
@@ -42,6 +42,18 @@ public partial class Cars : ComponentBase
               StateHasChanged();
           });
 
+        hubConnection.On<string, string>("CarEdit", (carId, name) =>
+         {
+             if (cars.Any(x => x.VIN.Equals(carId)))
+             {
+                 CarStateUI oldCar = cars.Where(x => x.VIN.Equals(carId)).FirstOrDefault();
+                 cars.Remove(oldCar);
+                 cars.Add(new CarStateUI(carId, name));
+             }
+
+             StateHasChanged();
+         });
+
         await hubConnection.StartAsync();
     }
 
@@ -49,5 +61,11 @@ public partial class Cars : ComponentBase
     {
         if (hubConnection is not null)
             hubConnection.DisposeAsync();
+    }
+
+    //TODO: Implement delete
+    public void Delete(CarStateUI car)
+    {
+
     }
 }

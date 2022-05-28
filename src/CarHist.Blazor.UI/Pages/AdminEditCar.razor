@@ -1,0 +1,9 @@
+﻿@page "/cars/edit/{Id}"
+
+<h3>AdminEditCar</h3>
+
+<MatStringField @bind-Value="@car.VIN" Disabled="true" Label="VIN"></MatStringField>
+<MatStringField @bind-Value="@car.Make" Label="Make"></MatStringField>
+<MatStringField @bind-Value="@car.Model" Label="Model"></MatStringField>
+<MatStringField @bind-Value="@car.EngineType" Label="Engine Type"></MatStringField>
+<MatButton class="btn btn-primary" @onclick="Update">Update</MatButton>

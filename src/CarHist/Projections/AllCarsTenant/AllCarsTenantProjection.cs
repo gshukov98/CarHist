@@ -8,16 +8,26 @@ namespace CarHist.Projections.AllCarsTenant;
 
 [DataContract(Namespace = BC.CarHist, Name = "3b4f8226-8dfc-4b4e-9ff2-96b2f1b3a300")]
 public class AllCarsTenantProjection : ProjectionDefinition<AllCarsTenantProjection.Data, AllCarsByTenantId>, IProjection,
-    IEventHandler<CarCreated>
+    IEventHandler<CarCreated>,
+    IEventHandler<CarEdited>
 {
     public AllCarsTenantProjection()
     {
         Subscribe<CarCreated>(x => new AllCarsByTenantId(x.Id.Tenant));
+        Subscribe<CarEdited>(x => new AllCarsByTenantId(x.Id.Tenant));
     }
 
     public void Handle(CarCreated @event)
     {
         State.Cars.Add(new CarData(@event.Id, @event.Make, @event.Model, @event.VIN, @event.EngineType));
+    }
+
+    public void Handle(CarEdited @event)
+    {
+        State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().Make = @event.Make;
+        State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().Model = @event.Model;
+        State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().VIN = @event.VIN;
+        State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().EngineType = @event.EngineType;
     }
 
     [DataContract(Namespace = BC.CarHist, Name = "3c9d5503-1914-4a56-8018-edb8e3a97494")]

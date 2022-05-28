@@ -4,17 +4,17 @@ public class CarStateUI
 {
     public CarStateUI() { }
 
-    public CarStateUI(string vIN, string make)
+    public CarStateUI(string vin, string make)
     {
         Make = make;
-        VIN = vIN;
+        VIN = vin;
     }
 
-    public CarStateUI(string make, string model, string vIN, string engineType)
+    public CarStateUI(string make, string model, string vin, string engineType)
     {
         Make = make;
         Model = model;
-        VIN = vIN;
+        VIN = vin;
         EngineType = engineType;
     }
 
