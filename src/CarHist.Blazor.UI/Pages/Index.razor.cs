@@ -4,7 +4,7 @@ namespace CarHist.Blazor.UI.Pages
 {
     public partial class Index : ComponentBase
     {
-        private string searchVIN;
+        private string SearchVIN;
 
         public void Insert()
         {
