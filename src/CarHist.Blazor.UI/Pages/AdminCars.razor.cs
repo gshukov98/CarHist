@@ -1,5 +1,7 @@
 ﻿using CarHist.Blazor.UI.Models;
 using CarHist.Blazor.UI.Services;
+using CarHist.Cars;
+using CarHist.Cars.Commands;
 using Elders.Cronus;
 using Elders.Cronus.MessageProcessing;
 using Elders.Cronus.Projections;
@@ -23,6 +25,9 @@ public partial class AdminCars : ComponentBase
 
     [Inject]
     protected IPublisher<ICommand> Publisher { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
 
     protected List<CarStateUI> cars = new List<CarStateUI>();
 
@@ -63,9 +68,22 @@ public partial class AdminCars : ComponentBase
             hubConnection.DisposeAsync();
     }
 
-    //TODO: Implement delete
     public void Delete(CarStateUI car)
     {
+        if (string.IsNullOrEmpty(car.VIN))
+            return;
 
+        var carId = CarId.Parse(FormatCarId(car.VIN));
+
+        var command = new DeleteCar(carId);
+        Publisher.Publish(command);
+
+        #region Don't look inside
+        Thread.Sleep(1000);
+        #endregion
+
+        NavigationManager.NavigateTo("/cars");
     }
+
+    private string FormatCarId(string id) => $"urn:{CronusContext.Tenant}:car:{id}";
 }

@@ -23,6 +23,8 @@ public class CarsProvider
         {
             foreach (var car in allCars.Data.State.Cars)
             {
+                if (car.DeletedDate != DateTimeOffset.MinValue) continue;
+
                 yield return new CarStateUI(car.Make, car.Model, car.VIN, car.EngineType);
             }
         }
