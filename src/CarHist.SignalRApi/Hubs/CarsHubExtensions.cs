@@ -23,4 +23,14 @@ internal static class CarsHubExtensions
 
         return Task.CompletedTask;
     }
+
+    internal static Task AnnounceThatCarIsDeleted(this IHubContext<CarsHub> hub, CarStateModel model)
+    {
+        if (hub?.Clients?.All is null == false)
+        {
+            hub.Clients.All.SendCoreAsync("CarDeleted", new object[] { model.Id.ToString(), model.Name }).GetAwaiter().GetResult();
+        }
+
+        return Task.CompletedTask;
+    }
 }

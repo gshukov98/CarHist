@@ -11,7 +11,8 @@ namespace CarHist.SignalRApi;
 [DataContract(Namespace = BC.CarHist, Name = "0ac79d7e-3680-4daa-a353-38add518ef73")]
 public class WhenCarIsCreatedPort : IPort,
     IEventHandler<CarCreated>,
-    IEventHandler<CarEdited>
+    IEventHandler<CarEdited>,
+    IEventHandler<CarDeleted>
 {
     private readonly IHubContext<CarsHub> hub;
 
@@ -28,5 +29,10 @@ public class WhenCarIsCreatedPort : IPort,
     public void Handle(CarEdited @event)
     {
         hub.AnnounceThatCarIsEdited(new CarStateModel(@event.Id, @event.Make));
+    }
+
+    public void Handle(CarDeleted @event)
+    {
+        hub.AnnounceThatCarIsDeleted(new CarStateModel(@event.Id, "deleted"));
     }
 }

@@ -59,6 +59,17 @@ public partial class AdminCars : ComponentBase
              StateHasChanged();
          });
 
+        hubConnection.On<string, string>("CarDeleted", (carId, name) =>
+        {
+            if (cars.Any(x => x.VIN.Equals(carId)))
+            {
+                CarStateUI deletedCar = cars.Where(x => x.VIN.Equals(carId)).FirstOrDefault();
+                cars.Remove(deletedCar);
+            }
+
+            StateHasChanged();
+        });
+
         await hubConnection.StartAsync();
     }
 
