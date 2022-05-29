@@ -11,5 +11,7 @@ public class HistoryByCarData
     }
 
     public List<CarHistoryPojectionModel> History { get; set; }
+
+    public bool IsDeleted { get; set; }
 }
 
