@@ -17,7 +17,7 @@ public class CarsProvider
 
     public IEnumerable<CarStateUI> GetCars()
     {
-        var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));// hello
+        var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));
 
         if (allCars.IsSuccess)
         {
@@ -26,6 +26,24 @@ public class CarsProvider
                 if (car.DeletedDate != DateTimeOffset.MinValue) continue;
 
                 yield return new CarStateUI(car.Make, car.Model, car.VIN, car.EngineType);
+            }
+        }
+
+        yield break;
+    }
+
+    public IEnumerable<CarStateUI> GetCarsBySearchVIN(string vin)
+    {
+        var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));
+
+        if (allCars.IsSuccess)
+        {
+            foreach (var car in allCars.Data.State.Cars)
+            {
+                if (car.DeletedDate != DateTimeOffset.MinValue) continue;
+
+                if (car.VIN.ToLowerInvariant().Contains(vin.ToLowerInvariant()))
+                    yield return new CarStateUI(car.Make, car.Model, car.VIN, car.EngineType);
             }
         }
 
