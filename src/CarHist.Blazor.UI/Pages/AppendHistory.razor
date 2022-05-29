@@ -23,4 +23,28 @@
             </MatTableRow>
         </MatTable>
     </div>
+    <div class="row">
+        <MatStringField Disabled="true" @bind-Value="@EditingVIN" Outlined="true"></MatStringField>
+
+        <MatTable Items="@history" class="mat-elevation-z5" PageSize="9999" ShowPaging="false">
+            <MatTableHeader>
+                <th style="width:15%">Type</th>
+                <th style="width:25%">Date</th>
+                <th style="width:60%">Description</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context.Type</td>
+                <td>@context.Date</td>
+                <td>@context.Description</td>
+            </MatTableRow>
+        </MatTable>
+    </div>
+    @if (EditingVIN.Equals("VIN: Empty") == false)
+    {
+        <div class="row">
+            <MatSelectValue @bind-Value="@type" Items="@typeItems" ValueSelector=@(i=>i.ToString())></MatSelectValue>
+            <MatStringField @bind-Value="@description" Label="Description"></MatStringField>
+            <MatButton class="btn btn-primary" @onclick="Insert">Save</MatButton>
+        </div>
+    }
 </div>

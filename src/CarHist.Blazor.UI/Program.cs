@@ -11,6 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddCronus(builder.Configuration);
 builder.Services.AddMatBlazor();
 builder.Services.AddTransient<CarsProvider>();
+builder.Services.AddTransient<CarHistoryProvider>();
 
 WebApplication app = builder.Build();
 

@@ -43,7 +43,7 @@ public partial class AdminEditCar : ComponentBase
         if (string.IsNullOrEmpty(car.VIN))
             return;
 
-        var carId = CarId.Parse(FormatCarId(car.VIN));
+        CarId carId = CarId.Parse(FormatCarId(car.VIN));
 
         var command = new EditCar(carId, car.Make, car.Model, car.VIN, car.EngineType);
         Publisher.Publish(command);
