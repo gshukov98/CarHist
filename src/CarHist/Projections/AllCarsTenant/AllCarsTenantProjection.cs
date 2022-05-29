@@ -9,12 +9,14 @@ namespace CarHist.Projections.AllCarsTenant;
 [DataContract(Namespace = BC.CarHist, Name = "3b4f8226-8dfc-4b4e-9ff2-96b2f1b3a300")]
 public class AllCarsTenantProjection : ProjectionDefinition<AllCarsTenantProjection.Data, AllCarsByTenantId>, IProjection,
     IEventHandler<CarCreated>,
-    IEventHandler<CarEdited>
+    IEventHandler<CarEdited>,
+    IEventHandler<CarDeleted>
 {
     public AllCarsTenantProjection()
     {
         Subscribe<CarCreated>(x => new AllCarsByTenantId(x.Id.Tenant));
         Subscribe<CarEdited>(x => new AllCarsByTenantId(x.Id.Tenant));
+        Subscribe<CarDeleted>(x => new AllCarsByTenantId(x.Id.Tenant));
     }
 
     public void Handle(CarCreated @event)
@@ -28,6 +30,11 @@ public class AllCarsTenantProjection : ProjectionDefinition<AllCarsTenantProject
         State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().Model = @event.Model;
         State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().VIN = @event.VIN;
         State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().EngineType = @event.EngineType;
+    }
+
+    public void Handle(CarDeleted @event)
+    {
+        State.Cars.Where(x => x.Id == @event.Id).FirstOrDefault().DeletedDate = @event.Timestamp;
     }
 
     [DataContract(Namespace = BC.CarHist, Name = "3c9d5503-1914-4a56-8018-edb8e3a97494")]
@@ -70,5 +77,8 @@ public class AllCarsTenantProjection : ProjectionDefinition<AllCarsTenantProject
 
         [DataMember(Order = 5)]
         public string EngineType { get; set; }
+
+        [DataMember(Order = 6)]
+        public DateTimeOffset DeletedDate { get; set; } = DateTimeOffset.MinValue;
     }
 }

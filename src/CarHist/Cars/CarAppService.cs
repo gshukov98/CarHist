@@ -9,6 +9,7 @@ namespace CarHist.Cars;
 public class CarAppService : ApplicationService<Car>,
     ICommandHandler<CreateCar>,
     ICommandHandler<EditCar>,
+    ICommandHandler<DeleteCar>,
     ICommandHandler<AppendHistory>
 {
     private readonly ILogger<CarAppService> _logger;
@@ -37,6 +38,22 @@ public class CarAppService : ApplicationService<Car>,
         {
             Car car = result.Data;
             car.EditCar(command.Id, command.Make, command.Model, command.VIN, command.EngineType);
+            repository.Save(car);
+        }
+        else if (result.HasError)
+        {
+            _logger.Error(() => $"Trying to edit missing aggregate id: {command.Id}");
+        }
+    }
+
+    public void Handle(DeleteCar command)
+    {
+        ReadResult<Car> result = repository.Load<Car>(command.Id);
+
+        if (result.IsSuccess)
+        {
+            Car car = result.Data;
+            car.DeleteCar(command.Id);
             repository.Save(car);
         }
         else if (result.HasError)
