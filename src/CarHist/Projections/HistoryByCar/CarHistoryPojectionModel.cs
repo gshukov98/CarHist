@@ -26,8 +26,5 @@ public class CarHistoryPojectionModel
 
     [DataMember(Order = 4)]
     public DateTimeOffset Timestamp { get; set; }
-
-    [DataMember(Order = 5)]
-    public bool IsDeleted { get; set; }
 }
 

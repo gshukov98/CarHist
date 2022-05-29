@@ -30,6 +30,14 @@ public class Car : AggregateRoot<CarState>
             Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
     }
 
+    public void DeleteCar(CarId id)
+    {
+        if (id is null) throw new ArgumentNullException(nameof(id));
+
+        if (state.DeletedDate == DateTimeOffset.MinValue)
+            Apply(new CarDeleted(id, DateTimeOffset.UtcNow));
+    }
+
     public void AppendHistory(CarId id, string type, string description, string company)
     {
         GuardAppendHistory(id, type, description, company);
@@ -85,6 +93,8 @@ public class CarState : AggregateRootState<Car, CarId>
 
     public List<CarHistory> History { get; set; }
 
+    public DateTimeOffset DeletedDate { get; set; } = DateTimeOffset.MinValue;
+
     public void When(CarCreated e)
     {
         Id = e.Id;
@@ -101,6 +111,11 @@ public class CarState : AggregateRootState<Car, CarId>
         Model = e.Model;
         VIN = e.VIN;
         EngineType = e.EngineType;
+    }
+
+    public void When(CarDeleted e)
+    {
+        DeletedDate = e.Timestamp;
     }
 
     public void When(HistoryAppended e)

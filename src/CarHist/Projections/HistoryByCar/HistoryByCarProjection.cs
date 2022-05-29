@@ -8,11 +8,13 @@ namespace CarHist.Projections.HistoryByCar;
 
 [DataContract(Namespace = BC.CarHist, Name = "884ab5ce-0fd9-4c32-bbc1-bce40386a230")]
 public class HistoryByCarProjection : ProjectionDefinition<HistoryByCarData, CarId>,
-    IEventHandler<HistoryAppended>
+    IEventHandler<HistoryAppended>,
+    IEventHandler<CarDeleted>
 {
     public HistoryByCarProjection()
     {
         Subscribe<HistoryAppended>(x => x.Id);
+        Subscribe<CarDeleted>(x => x.Id);
     }
 
     //TODO: Think about the case with replaying events, maybe we should have id of event
@@ -22,6 +24,11 @@ public class HistoryByCarProjection : ProjectionDefinition<HistoryByCarData, Car
 
         CarHistoryPojectionModel history = ToCarHistoryProjectionModel(@event);
         State.History.Add(history);
+    }
+
+    public void Handle(CarDeleted @event)
+    {
+        State.IsDeleted = true;
     }
 
     private CarHistoryPojectionModel ToCarHistoryProjectionModel(HistoryAppended @event)
