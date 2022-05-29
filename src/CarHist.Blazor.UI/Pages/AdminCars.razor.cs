@@ -84,7 +84,7 @@ public partial class AdminCars : ComponentBase
         if (string.IsNullOrEmpty(car.VIN))
             return;
 
-        var carId = CarId.Parse(FormatCarId(car.VIN));
+        CarId carId = CarId.Parse(FormatCarId(car.VIN));
 
         var command = new DeleteCar(carId);
         Publisher.Publish(command);

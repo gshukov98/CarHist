@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace CarHist.Blazor.UI.Pages
+namespace CarHist.Blazor.UI.Pages;
+
+public partial class AdminLogin : ComponentBase
 {
-    public partial class AdminLogin : ComponentBase
+    private string Username;
+
+    private string Password;
+
+    public void Login()
     {
-        private string Username;
 
-        private string Password;
-
-        public void Login()
-        {
-
-        }
     }
 }
