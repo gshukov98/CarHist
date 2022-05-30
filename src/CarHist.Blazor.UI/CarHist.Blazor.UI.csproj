@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
     <PackageReference Include="MudBlazor" Version="6.0.7" />
+    <PackageReference Include="Radzen.Blazor" Version="3.18.12" />
   </ItemGroup>
 
   <ItemGroup>
