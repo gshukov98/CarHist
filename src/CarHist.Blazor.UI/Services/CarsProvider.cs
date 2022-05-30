@@ -15,6 +15,19 @@ public class CarsProvider
         _logger = logger;
     }
 
+    public bool IsExistingCar(string vin)
+    {
+        var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));
+
+        foreach (var car in allCars.Data.State.Cars)
+        {
+            if (car.VIN.Equals(vin, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
+
     public IEnumerable<CarStateUI> GetCars()
     {
         var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));

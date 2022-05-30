@@ -1,0 +1,36 @@
+﻿@page "/car/details/{Id}"
+
+<h3>CarDetails</h3>
+
+<div class="container">
+    <div class="row">
+        <MatStringField Disabled="true" @bind-Value="@ShowingVIN" Outlined="true"></MatStringField>
+
+        <MatTable Items="@History" class="mat-elevation-z5" PageSize="9999" ShowPaging="false">
+            <MatTableHeader>
+                <th style="width:15%">Type</th>
+                <th style="width:25%">Date</th>
+                <th style="width:60%">Description</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context.Type</td>
+                <td>@context.Date</td>
+                <td>@context.Description</td>
+            </MatTableRow>
+        </MatTable>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 my-5">
+            <RadzenChart>
+                <RadzenLineSeries Data="@CarHistory" CategoryProperty="Date" Title="Car Mileage" ValueProperty="Mileage">
+                    <RadzenMarkers MarkerType="MarkerType.Circle" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" FormatString="{0:dd/MMM/yyyy}" />
+                <RadzenValueAxis Formatter="@FormatAsKM">
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Mileage in KM" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        </div>
+    </div>
+</div>

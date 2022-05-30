@@ -30,4 +30,34 @@ public class CarHistoryProvider
 
         yield break;
     }
+
+    public IEnumerable<CarHistoryUI> GetCarMileageByVIN(CarId carId)
+    {
+        var carHistory = _projections.Get<HistoryByCarProjection>(carId);
+
+        if (carHistory.IsSuccess)
+        {
+            if (carHistory.Data.State.IsDeleted == true) yield break;
+
+            foreach (var car in carHistory.Data.State.History.OrderBy(x => x.Timestamp).Where(x => x.Type.Equals("Mileage")))
+                yield return new CarHistoryUI(car.Type, car.Timestamp, car.Description);
+        }
+
+        yield break;
+    }
+
+    public IEnumerable<CarHistoryUI> GetCarWithoutMileageByVIN(CarId carId)
+    {
+        var carHistory = _projections.Get<HistoryByCarProjection>(carId);
+
+        if (carHistory.IsSuccess)
+        {
+            if (carHistory.Data.State.IsDeleted == true) yield break;
+
+            foreach (var car in carHistory.Data.State.History.OrderBy(x => x.Timestamp).Where(x => x.Type.Equals("Mileage") == false))
+                yield return new CarHistoryUI(car.Type, car.Timestamp, car.Description);
+        }
+
+        yield break;
+    }
 }
