@@ -1,4 +1,5 @@
 ﻿using CarHist.Blazor.UI.Models;
+using CarHist.Cars;
 using CarHist.Projections.AllCarsTenant;
 using Elders.Cronus.Projections;
 
@@ -19,13 +20,34 @@ public class CarsProvider
     {
         var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));
 
-        foreach (var car in allCars.Data.State.Cars)
+        if (allCars.IsSuccess)
         {
-            if (car.VIN.Equals(vin, StringComparison.OrdinalIgnoreCase))
-                return true;
+            foreach (var car in allCars.Data.State.Cars)
+            {
+                if (car.VIN.Equals(vin, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
         }
 
         return false;
+    }
+
+    public CarStateUI GetCarInfo(CarId carId)
+    {
+        var allCars = _projections.Get<AllCarsTenantProjection>(new AllCarsByTenantId("pruvit"));
+
+        if (allCars.IsSuccess)
+        {
+            foreach (var car in allCars.Data.State.Cars)
+            {
+                if (car.DeletedDate != DateTimeOffset.MinValue) continue;
+
+                if (car.Id.Value.Equals(carId, StringComparison.OrdinalIgnoreCase))
+                    return new CarStateUI(car.Make, car.Model, car.VIN, car.EngineType);
+            }
+        }
+
+        return null;
     }
 
     public IEnumerable<CarStateUI> GetCars()
