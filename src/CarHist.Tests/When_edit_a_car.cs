@@ -57,6 +57,8 @@ class When_edit_a_car
         It should_have_proper_engineType = () => car.RootState().EngineType.ShouldEqual(engineType);
 
         It should_have_proper_id = () => car.RootState().Id.ShouldEqual(id);
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_proper_data_v2
@@ -74,6 +76,8 @@ class When_edit_a_car
         It should_have_proper_engineType = () => car.RootState().EngineType.ShouldEqual(engineType);
 
         It should_have_proper_id = () => car.RootState().Id.ShouldEqual(id);
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_proper_data_v3
@@ -91,6 +95,8 @@ class When_edit_a_car
         It should_have_proper_engineType = () => car.RootState().EngineType.ShouldEqual(engineType);
 
         It should_have_proper_id = () => car.RootState().Id.ShouldEqual(id);
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_proper_data_v4
@@ -108,6 +114,8 @@ class When_edit_a_car
         It should_have_proper_engineType = () => car.RootState().EngineType.ShouldEqual(newEngineType);
 
         It should_have_proper_id = () => car.RootState().Id.ShouldEqual(id);
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_proper_data_v5
@@ -125,6 +133,8 @@ class When_edit_a_car
         It should_have_proper_engineType = () => car.RootState().EngineType.ShouldEqual(newEngineType);
 
         It should_have_proper_id = () => car.RootState().Id.ShouldEqual(id);
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_carId_null
@@ -134,6 +144,8 @@ class When_edit_a_car
         It should_fail = () => exception.ShouldBeOfExactType<ArgumentNullException>();
 
         It should_have_a_specific_reason = () => exception.Message.ShouldContain("Value cannot be null. (Parameter 'id')");
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_make_null
@@ -152,6 +164,8 @@ class When_edit_a_car
         It should_fail = () => exception.ShouldBeOfExactType<ArgumentNullException>();
 
         It should_have_a_specific_reason = () => exception.Message.ShouldContain("Value cannot be null. (Parameter 'model')");
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_vin_null
@@ -161,6 +175,8 @@ class When_edit_a_car
         It should_fail = () => exception.ShouldBeOfExactType<ArgumentNullException>();
 
         It should_have_a_specific_reason = () => exception.Message.ShouldContain("Value cannot be null. (Parameter 'vin')");
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 
     class When_edit_a_car_with_engineType_null
@@ -170,5 +186,7 @@ class When_edit_a_car
         It should_fail = () => exception.ShouldBeOfExactType<ArgumentNullException>();
 
         It should_have_a_specific_reason = () => exception.Message.ShouldContain("Value cannot be null. (Parameter 'engineType')");
+
+        It should_have_proper_history_count = () => car.RootState().History.Count.ShouldEqual(0);
     }
 }
