@@ -1,4 +1,5 @@
-﻿using CarHist.Blazor.UI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using CarHist.Blazor.UI.Models;
 using CarHist.Cars;
 using CarHist.Cars.Commands;
 using Elders.Cronus;
@@ -20,23 +21,35 @@ public partial class AddCar : ComponentBase
     [Inject]
     protected IPublisher<ICommand> Publisher { get; set; }
 
-
-    string make;
-    string model;
-    string vin;
-    string engineType;
+    private AddCarInputModel AddCarInputModel = new AddCarInputModel();
 
     public void Insert()
     {
-        //??
-        CarId id = new CarId(vin, CronusContext.Tenant);
+        CarId id = new CarId(AddCarInputModel.VIN, CronusContext.Tenant);
 
-        //create car command
-        //add checks for values
-        var command = new CreateCar(id, make, model, vin, engineType);
+        var command = new CreateCar(id, AddCarInputModel.Make, AddCarInputModel.Model, AddCarInputModel.VIN, AddCarInputModel.EngineType);
 
         Publisher.Publish(command);
 
         NavigationManager.NavigateTo("/cars");
     }
+}
+
+public class AddCarInputModel
+{
+    [Required]
+    [MinLength(2), MaxLength(20)]
+    public string Make { get; set; }
+
+    [Required]
+    [MinLength(2), MaxLength(25)]
+    public string Model { get; set; }
+
+    [Required]
+    [MinLength(10), MaxLength(20)]
+    public string VIN { get; set; }
+
+    [Required]
+    [MinLength(6), MaxLength(8)]
+    public string EngineType { get; set; }
 }
