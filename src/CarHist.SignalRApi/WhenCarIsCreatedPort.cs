@@ -12,7 +12,8 @@ namespace CarHist.SignalRApi;
 public class WhenCarIsCreatedPort : IPort,
     IEventHandler<CarCreated>,
     IEventHandler<CarEdited>,
-    IEventHandler<CarDeleted>
+    IEventHandler<CarDeleted>,
+    IEventHandler<HistoryAppended>
 {
     private readonly IHubContext<CarsHub> hub;
 
@@ -34,5 +35,10 @@ public class WhenCarIsCreatedPort : IPort,
     public void Handle(CarDeleted @event)
     {
         hub.AnnounceThatCarIsDeleted(new CarStateModel(@event.Id, "deleted"));
+    }
+
+    public void Handle(HistoryAppended @event)
+    {
+        hub.AnnounceThatCarHistoryIsAppended(new CarStateModel(@event.Id, "historyAppended"));
     }
 }
