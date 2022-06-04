@@ -79,6 +79,8 @@ public partial class AdminCars : ComponentBase
             hubConnection.DisposeAsync();
     }
 
+
+    //TODO: Add confirm popup
     public void Delete(CarStateUI car)
     {
         if (string.IsNullOrEmpty(car.VIN))

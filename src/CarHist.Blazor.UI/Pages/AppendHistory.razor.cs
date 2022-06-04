@@ -1,4 +1,5 @@
-﻿using CarHist.Blazor.UI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using CarHist.Blazor.UI.Models;
 using CarHist.Blazor.UI.Services;
 using CarHist.Cars;
 using Elders.Cronus;
@@ -23,13 +24,11 @@ public partial class AppendHistory : ComponentBase
 
     private CarId Id;
 
-    private string SearchVIN;
+    private SearchVINInputModel SearchVINInputModel = new SearchVINInputModel();
+
+    private AppendHistoryInputModel AppendHistoryInputModel = new AppendHistoryInputModel();
 
     private string EditingVIN = "VIN: Empty";
-
-    string type;
-
-    string description;
 
     protected List<CarStateUI> cars = new List<CarStateUI>();
 
@@ -45,8 +44,8 @@ public partial class AppendHistory : ComponentBase
 
     public void Search()
     {
-        if (string.IsNullOrEmpty(SearchVIN.Trim()) == false)
-            cars = CarsProvider.GetCarsBySearchVIN(SearchVIN).ToList();
+        if (string.IsNullOrEmpty(SearchVINInputModel.SearchVIN.Trim()) == false)
+            cars = CarsProvider.GetCarsBySearchVIN(SearchVINInputModel.SearchVIN).ToList();
         else
             cars = CarsProvider.GetCars().ToList();
 
@@ -64,7 +63,7 @@ public partial class AppendHistory : ComponentBase
     public void Insert()
     {
         //validate props
-        var command = new Cars.Commands.AppendHistory(Id, type, description, "Test Company");
+        var command = new Cars.Commands.AppendHistory(Id, AppendHistoryInputModel.Type, AppendHistoryInputModel.Description, "Test Company");
 
         Publisher.Publish(command);
     }
@@ -77,4 +76,14 @@ public partial class AppendHistory : ComponentBase
                 "Service",
                 "Mileage"
             };
+}
+
+public class AppendHistoryInputModel
+{
+    [Required]
+    public string Type { get; set; }
+
+    [Required]
+    [MinLength(1), MaxLength(1000)]
+    public string Description { get; set; }
 }
