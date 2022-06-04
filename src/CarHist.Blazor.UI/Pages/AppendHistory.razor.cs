@@ -5,11 +5,14 @@ using CarHist.Cars;
 using Elders.Cronus;
 using Elders.Cronus.MessageProcessing;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CarHist.Blazor.UI.Pages;
 
 public partial class AppendHistory : ComponentBase
 {
+    private HubConnection hubConnection;
+
     [Inject]
     protected CarsProvider CarsProvider { get; set; }
 
@@ -34,12 +37,28 @@ public partial class AppendHistory : ComponentBase
 
     protected List<CarHistoryUI> history = new List<CarHistoryUI>();
 
-    //TODO: Add sigralR here
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         cars = CarsProvider.GetCars().ToList();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://127.0.0.1:17677" + "/hub/cars")
+            .WithAutomaticReconnect()
+            .Build();
 
-        return base.OnInitializedAsync();
+        hubConnection.On<string, string>("CarHistoryAppended", (carId, name) =>
+        {
+            history = CarHistoryProvider.GetCarByVIN(Id).ToList();
+
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    public void Dispose()
+    {
+        if (hubConnection is not null)
+            hubConnection.DisposeAsync();
     }
 
     public void Search()
@@ -62,10 +81,12 @@ public partial class AppendHistory : ComponentBase
 
     public void Insert()
     {
-        //validate props
         var command = new Cars.Commands.AppendHistory(Id, AppendHistoryInputModel.Type, AppendHistoryInputModel.Description, "Test Company");
 
         Publisher.Publish(command);
+
+        // Eventual consistency
+        history.Add(new CarHistoryUI(AppendHistoryInputModel.Type, DateTimeOffset.UtcNow, AppendHistoryInputModel.Description));
     }
 
     private string FormatCarId(string id) => $"urn:{CronusContext.Tenant}:car:{id}";

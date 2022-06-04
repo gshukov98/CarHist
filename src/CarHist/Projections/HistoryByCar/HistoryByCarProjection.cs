@@ -17,7 +17,6 @@ public class HistoryByCarProjection : ProjectionDefinition<HistoryByCarData, Car
         Subscribe<CarDeleted>(x => x.Id);
     }
 
-    //TODO: Think about the case with replaying events, maybe we should have id of event
     public void Handle(HistoryAppended @event)
     {
         if (State.History.Any(x => x.Timestamp == @event.Timestamp)) return;
