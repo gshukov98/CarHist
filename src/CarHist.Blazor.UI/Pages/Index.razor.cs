@@ -1,4 +1,5 @@
-﻿using CarHist.Blazor.UI.Services;
+﻿using CarHist.Blazor.UI.Pages.InputValidationModels;
+using CarHist.Blazor.UI.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CarHist.Blazor.UI.Pages;
@@ -11,15 +12,15 @@ public partial class Index : ComponentBase
     [Inject]
     protected CarsProvider CarsProvider { get; set; }
 
-    private string SearchVIN;
+    private SearchVINInputModel SearchVINInputModel = new SearchVINInputModel();
 
     public void Insert()
     {
-        if (string.IsNullOrEmpty(SearchVIN) == false)
+        if (string.IsNullOrEmpty(SearchVINInputModel.SearchVIN) == false)
         {
-            bool isExisting = CarsProvider.IsExistingCar(SearchVIN);
+            bool isExisting = CarsProvider.IsExistingCar(SearchVINInputModel.SearchVIN);
             if (isExisting)
-                NavigationManager.NavigateTo($"/car/details/{SearchVIN}");
+                NavigationManager.NavigateTo($"/car/details/{SearchVINInputModel.SearchVIN}");
         }
     }
 }

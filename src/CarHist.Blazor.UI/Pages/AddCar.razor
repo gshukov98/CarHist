@@ -3,10 +3,23 @@
 
 <h1>Add Car</h1>
 <p>
-    <MatStringField @bind-Value="@make" Label="Make"></MatStringField>
-    <MatStringField @bind-Value="@model" Label="Model"></MatStringField>
-    <MatStringField @bind-Value="@vin" Label="Vin"></MatStringField>
-    <MatStringField @bind-Value="@engineType" Label="Engine Type"></MatStringField>
-    <MatButton class="btn btn-primary" @onclick="Insert">Save</MatButton>
+    <EditForm Model="AddCarInputModel" OnValidSubmit="Insert">
+        <DataAnnotationsValidator />
+
+        <MatStringField @bind-Value="@AddCarInputModel.Make" Label="Make"></MatStringField>
+        <ValidationMessage For="@(() => AddCarInputModel.Make)" />
+
+        <MatStringField @bind-Value="@AddCarInputModel.Model" Label="Model"></MatStringField>
+        <ValidationMessage For="@(() => AddCarInputModel.Model)" />
+
+        <MatStringField @bind-Value="@AddCarInputModel.VIN" Label="VIN"></MatStringField>
+        <ValidationMessage For="@(() => AddCarInputModel.VIN)" />
+
+        <MatStringField @bind-Value="@AddCarInputModel.EngineType" Label="Engine Type"></MatStringField>
+        <ValidationMessage For="@(() => AddCarInputModel.EngineType)" />
+
+        <MatButton class="btn btn-primary" Type="submit" Raised="true">Save</MatButton>
+
+    </EditForm>
 </p>
 

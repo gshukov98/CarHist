@@ -1,4 +1,5 @@
 ﻿using CarHist.Blazor.UI.Models;
+using CarHist.Blazor.UI.Pages.InputValidationModels;
 using CarHist.Cars;
 using CarHist.Cars.Commands;
 using Elders.Cronus;
@@ -20,20 +21,13 @@ public partial class AddCar : ComponentBase
     [Inject]
     protected IPublisher<ICommand> Publisher { get; set; }
 
-
-    string make;
-    string model;
-    string vin;
-    string engineType;
+    private AddCarInputModel AddCarInputModel = new AddCarInputModel();
 
     public void Insert()
     {
-        //??
-        CarId id = new CarId(vin, CronusContext.Tenant);
+        CarId id = new CarId(AddCarInputModel.VIN, CronusContext.Tenant);
 
-        //create car command
-        //add checks for values
-        var command = new CreateCar(id, make, model, vin, engineType);
+        var command = new CreateCar(id, AddCarInputModel.Make, AddCarInputModel.Model, AddCarInputModel.VIN, AddCarInputModel.EngineType);
 
         Publisher.Publish(command);
 

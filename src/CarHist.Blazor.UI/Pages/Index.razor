@@ -5,8 +5,15 @@
 <div class="container">
     <div class="row">
         <p>
-            <MatStringField @bind-Value="@SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
-            <MatButton class="btn btn-primary" @onclick="Insert">Search</MatButton>
+            <EditForm Model="SearchVINInputModel" OnValidSubmit="Insert">
+                <DataAnnotationsValidator />
+
+                <MatStringField @bind-Value="@SearchVINInputModel.SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
+                <ValidationMessage For="@(() => SearchVINInputModel.SearchVIN)" />
+
+                <MatButton class="btn btn-primary" Type="submit" Raised="true">Search</MatButton>
+
+            </EditForm>
         </p>
     </div>
 </div>

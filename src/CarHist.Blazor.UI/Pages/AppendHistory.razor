@@ -5,8 +5,15 @@
 <div class="container">
     <div class="row">
         <p>
-            <MatStringField @bind-Value="@SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
-            <MatButton class="btn btn-primary" @onclick="Search">Search</MatButton>
+            <EditForm Model="SearchVINInputModel" OnValidSubmit="Search">
+                <DataAnnotationsValidator />
+
+                <MatStringField @bind-Value="@SearchVINInputModel.SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
+                <ValidationMessage For="@(() => SearchVINInputModel.SearchVIN)" />
+
+                <MatButton class="btn btn-primary" Type="submit" Raised="true">Search</MatButton>
+
+            </EditForm>
         </p>
         <MatTable Items="@cars" class="mat-elevation-z5" PageSize="9999" ShowPaging="false">
             <MatTableHeader>
@@ -42,9 +49,18 @@
     @if (EditingVIN.Equals("VIN: Empty") == false)
     {
         <div class="row">
-            <MatSelectValue @bind-Value="@type" Items="@typeItems" ValueSelector=@(i=>i.ToString())></MatSelectValue>
-            <MatStringField @bind-Value="@description" Label="Description"></MatStringField>
-            <MatButton class="btn btn-primary" @onclick="Insert">Save</MatButton>
+            <EditForm Model="AppendHistoryInputModel" OnValidSubmit="Insert">
+                <DataAnnotationsValidator />
+
+            <MatSelectValue @bind-Value="@AppendHistoryInputModel.Type" Items="@typeItems" ValueSelector=@(i=>i.ToString())></MatSelectValue>\
+            <ValidationMessage For="@(() => AppendHistoryInputModel.Type)" />
+
+            <MatStringField @bind-Value="@AppendHistoryInputModel.Description" Label="Description"></MatStringField>
+            <ValidationMessage For="@(() => AppendHistoryInputModel.Description)" />
+
+            <MatButton class="btn btn-primary" Type="submit" Raised="true">Save</MatButton>
+
+            </EditForm>
         </div>
     }
 </div>
