@@ -12,15 +12,15 @@ public partial class Index : ComponentBase
     [Inject]
     protected CarsProvider CarsProvider { get; set; }
 
-    private SearchVINInputModel searchVINInputModel = new SearchVINInputModel();
+    private SearchVINInputModel SearchVINInputModel = new SearchVINInputModel();
 
     public void Insert()
     {
-        if (string.IsNullOrEmpty(searchVINInputModel.SearchVIN) == false)
+        if (string.IsNullOrEmpty(SearchVINInputModel.SearchVIN) == false)
         {
-            bool isExisting = CarsProvider.IsExistingCar(searchVINInputModel.SearchVIN);
+            bool isExisting = CarsProvider.IsExistingCar(SearchVINInputModel.SearchVIN);
             if (isExisting)
-                NavigationManager.NavigateTo($"/car/details/{searchVINInputModel.SearchVIN}");
+                NavigationManager.NavigateTo($"/car/details/{SearchVINInputModel.SearchVIN}");
         }
     }
 }

@@ -5,13 +5,13 @@
 <div class="container">
     <div class="row">
         <p>
-            <EditForm Model="searchVINInputModel" OnValidSubmit="Insert">
+            <EditForm Model="SearchVINInputModel" OnValidSubmit="Insert">
+                <DataAnnotationsValidator />
 
-            <DataAnnotationsValidator/>
-            <MatStringField @bind-Value="@searchVINInputModel.SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
-            <ValidationMessage For="@(() => searchVINInputModel.SearchVIN)"/>
+                <MatStringField @bind-Value="@SearchVINInputModel.SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>
+                <ValidationMessage For="@(() => SearchVINInputModel.SearchVIN)" />
 
-            <MatButton Type="submit" Raised="true">Search</MatButton>
+                <MatButton class="btn btn-primary" Type="submit" Raised="true">Search</MatButton>
 
             </EditForm>
         </p>
