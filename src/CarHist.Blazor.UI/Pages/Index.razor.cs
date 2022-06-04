@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarHist.Blazor.UI.Pages.InputValidationModels;
 using CarHist.Blazor.UI.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -23,11 +23,4 @@ public partial class Index : ComponentBase
                 NavigationManager.NavigateTo($"/car/details/{SearchVINInputModel.SearchVIN}");
         }
     }
-}
-
-public class SearchVINInputModel
-{
-    [Required]
-    [MinLength(10)]
-    public string SearchVIN { get; set; }
 }

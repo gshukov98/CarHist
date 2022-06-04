@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using CarHist.Blazor.UI.Models;
+﻿using CarHist.Blazor.UI.Models;
+using CarHist.Blazor.UI.Pages.InputValidationModels;
 using CarHist.Cars;
 using CarHist.Cars.Commands;
 using Elders.Cronus;
@@ -33,23 +33,4 @@ public partial class AddCar : ComponentBase
 
         NavigationManager.NavigateTo("/cars");
     }
-}
-
-public class AddCarInputModel
-{
-    [Required]
-    [MinLength(2), MaxLength(20)]
-    public string Make { get; set; }
-
-    [Required]
-    [MinLength(2), MaxLength(25)]
-    public string Model { get; set; }
-
-    [Required]
-    [MinLength(10), MaxLength(20)]
-    public string VIN { get; set; }
-
-    [Required]
-    [MinLength(6), MaxLength(8)]
-    public string EngineType { get; set; }
 }

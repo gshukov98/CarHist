@@ -5,7 +5,7 @@ using Elders.Cronus.MessageProcessing;
 using Microsoft.AspNetCore.Components;
 using CarHist.Cars;
 using CarHist.Cars.Commands;
-using System.ComponentModel.DataAnnotations;
+using CarHist.Blazor.UI.Pages.InputValidationModels;
 
 namespace CarHist.Blazor.UI.Pages;
 
@@ -61,36 +61,5 @@ public partial class AdminEditCar : ComponentBase
     }
 
     private string FormatCarId(string id) => $"urn:{CronusContext.Tenant}:car:{id}";
-}
-
-public class EditCarInputModel
-{
-    public EditCarInputModel()
-    {
-
-    }
-
-    public EditCarInputModel(string make, string model, string VIN, string engineType)
-    {
-        Make = make;
-        Model = model;
-        this.VIN = VIN;
-        EngineType = engineType;
-    }
-
-    [Required]
-    [MinLength(2), MaxLength(20)]
-    public string Make { get; set; }
-
-    [Required]
-    [MinLength(2), MaxLength(25)]
-    public string Model { get; set; }
-
-    [Required]
-    public string VIN { get; set; }
-
-    [Required]
-    [MinLength(6), MaxLength(8)]
-    public string EngineType { get; set; }
 }
 

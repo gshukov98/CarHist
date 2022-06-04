@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using CarHist.Blazor.UI.Models;
+﻿using CarHist.Blazor.UI.Models;
+using CarHist.Blazor.UI.Pages.InputValidationModels;
 using CarHist.Blazor.UI.Services;
 using CarHist.Cars;
 using Elders.Cronus;
@@ -76,14 +76,4 @@ public partial class AppendHistory : ComponentBase
                 "Service",
                 "Mileage"
             };
-}
-
-public class AppendHistoryInputModel
-{
-    [Required]
-    public string Type { get; set; }
-
-    [Required]
-    [MinLength(1), MaxLength(1000)]
-    public string Description { get; set; }
 }
