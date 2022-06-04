@@ -21,13 +21,13 @@ public class Car : AggregateRoot<CarState>
         Guard(id, make, model, vin, engineType);
 
         if (state.Make.IsDifferentFrom(make))
-            Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
+            Apply(new CarEdited(id, make, model, state.VIN, engineType, DateTimeOffset.UtcNow));
         else if (state.Model.IsDifferentFrom(model))
-            Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
-        else if (state.VIN.IsDifferentFrom(vin))
-            Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
+            Apply(new CarEdited(id, make, model, state.VIN, engineType, DateTimeOffset.UtcNow));
+        else if (state.VIN.IsDifferentFrom(vin))// we can't change vin
+            Apply(new CarEdited(id, make, model, state.VIN, engineType, DateTimeOffset.UtcNow));
         else if (state.EngineType.IsDifferentFrom(engineType))
-            Apply(new CarEdited(id, make, model, vin, engineType, DateTimeOffset.UtcNow));
+            Apply(new CarEdited(id, make, model, state.VIN, engineType, DateTimeOffset.UtcNow));
     }
 
     public void DeleteCar(CarId id)
