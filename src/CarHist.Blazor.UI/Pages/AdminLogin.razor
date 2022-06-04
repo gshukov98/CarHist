@@ -8,12 +8,20 @@
             <h3>Admin Login</h3>
         </div>
         <div>
-            <h5 class="mat-subtitle1">Username</h5>
-            <MatStringField @bind-Value="@Username" Label="Enter Username..." Outlined="true"></MatStringField>
-            <h5 class="mat-subtitle1">Password</h5>
-            <MatStringField @bind-Value="@Password" Label="Enter Username..." Outlined="true"></MatStringField>
+            <EditForm Model="LoginInputModel" OnValidSubmit="Login">
+                <DataAnnotationsValidator />
+                <h5 class="mat-subtitle1">Username</h5>
+                <MatStringField @bind-Value="@LoginInputModel.Username" Label="Enter Username..." Outlined="true"></MatStringField>
+                <ValidationMessage For="@(() => LoginInputModel.Username)" />
+
+                <h5 class="mat-subtitle1">Password</h5>
+                <MatStringField @bind-Value="@LoginInputModel.Password" Label="Enter Password..." Outlined="true"></MatStringField>
+                <ValidationMessage For="@(() => LoginInputModel.Password)" />
+
+                <MatButton class="btn btn-primary" Type="submit" Raised="true">Login</MatButton>
+
+            </EditForm>
         </div>
-        <MatButton class="btn btn-primary" @onclick="Login">Login</MatButton>
     </div>
     <div class="col">
     </div>

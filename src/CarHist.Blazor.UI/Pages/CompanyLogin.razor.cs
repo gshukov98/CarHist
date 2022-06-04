@@ -4,9 +4,7 @@ namespace CarHist.Blazor.UI.Pages;
 
 public partial class CompanyLogin : ComponentBase
 {
-    private string Username;
-
-    private string Password;
+    private LoginInputModel LoginInputModel = new LoginInputModel();
 
     public void Login()
     {
