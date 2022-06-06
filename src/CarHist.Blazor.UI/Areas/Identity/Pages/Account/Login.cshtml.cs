@@ -32,7 +32,12 @@ namespace CarHist.Blazor.UI.Areas.Identity.Pages
             {
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
 
-                if (result.Succeeded) return LocalRedirect(ReturnUrl);
+                if (result.Succeeded)
+                {
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                    return LocalRedirect(ReturnUrl);
+                }
             }
 
             return Page();

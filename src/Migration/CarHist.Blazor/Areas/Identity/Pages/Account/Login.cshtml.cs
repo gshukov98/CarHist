@@ -3,17 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CarHist.Blazor.UI.Areas.Identity.Pages
+namespace CarHist.Blazor.Areas.Identity.Pages
 {
-    public class RegisterModel : PageModel
+    public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public RegisterModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
-            _userManager = userManager;
         }
 
         [BindProperty]
@@ -32,21 +30,9 @@ namespace CarHist.Blazor.UI.Areas.Identity.Pages
 
             if (ModelState.IsValid)
             {
-                var identity = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(identity, Input.Password);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
 
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(identity, "User");
-
-                    if (identity.Email.StartsWith("admin"))
-                        await _userManager.AddToRoleAsync(identity, "Admin");
-
-                    //true if want to save auth in session
-                    await _signInManager.SignInAsync(identity, isPersistent: false);
-
-                    return LocalRedirect(ReturnUrl);
-                }
+                if (result.Succeeded) return LocalRedirect(ReturnUrl);
             }
 
             return Page();
