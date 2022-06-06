@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <p>
-            <EditForm Model="SearchVINInputModel" OnValidSubmit="Insert">
+            <EditForm Model="SearchVINInputModel" OnValidSubmit="Insert" Context="context2">
                 <DataAnnotationsValidator />
 
                 <MatStringField @bind-Value="@SearchVINInputModel.SearchVIN" Label="Enter VIN number..." Outlined="true"></MatStringField>

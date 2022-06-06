@@ -1,25 +1,31 @@
 ﻿@page "/addCar"
+
+<AuthorizeView Roles="Admin,User">
+    <Authorized>
+        <p>
+            <EditForm Model="AddCarInputModel" OnValidSubmit="Insert" Context="contextv2">
+                <DataAnnotationsValidator />
+
+                <MatStringField @bind-Value="@AddCarInputModel.Make" Label="Make"></MatStringField>
+                <ValidationMessage For="@(() => AddCarInputModel.Make)" />
+
+                <MatStringField @bind-Value="@AddCarInputModel.Model" Label="Model"></MatStringField>
+                <ValidationMessage For="@(() => AddCarInputModel.Model)" />
+
+                <MatStringField @bind-Value="@AddCarInputModel.VIN" Label="VIN"></MatStringField>
+                <ValidationMessage For="@(() => AddCarInputModel.VIN)" />
+
+                <MatStringField @bind-Value="@AddCarInputModel.EngineType" Label="Engine Type"></MatStringField>
+                <ValidationMessage For="@(() => AddCarInputModel.EngineType)" />
+
+                <MatButton class="btn btn-primary" Type="submit" Raised="true">Save</MatButton>
+
+            </EditForm>
+        </p>
+    </Authorized>
+    <NotAuthorized>
+        <h1>You are not authorized to see this component</h1>
+    </NotAuthorized>
+</AuthorizeView>
 <PageTitle>Add Car</PageTitle>
-
-<h1>Add Car</h1>
-<p>
-    <EditForm Model="AddCarInputModel" OnValidSubmit="Insert">
-        <DataAnnotationsValidator />
-
-        <MatStringField @bind-Value="@AddCarInputModel.Make" Label="Make"></MatStringField>
-        <ValidationMessage For="@(() => AddCarInputModel.Make)" />
-
-        <MatStringField @bind-Value="@AddCarInputModel.Model" Label="Model"></MatStringField>
-        <ValidationMessage For="@(() => AddCarInputModel.Model)" />
-
-        <MatStringField @bind-Value="@AddCarInputModel.VIN" Label="VIN"></MatStringField>
-        <ValidationMessage For="@(() => AddCarInputModel.VIN)" />
-
-        <MatStringField @bind-Value="@AddCarInputModel.EngineType" Label="Engine Type"></MatStringField>
-        <ValidationMessage For="@(() => AddCarInputModel.EngineType)" />
-
-        <MatButton class="btn btn-primary" Type="submit" Raised="true">Save</MatButton>
-
-    </EditForm>
-</p>
 
