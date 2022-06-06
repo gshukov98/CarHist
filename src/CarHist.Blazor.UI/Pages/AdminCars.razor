@@ -1,22 +1,27 @@
 ﻿@page "/cars"
 <PageTitle>Cars</PageTitle>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <MatTable Items="@cars" class="mat-elevation-z5" PageSize="9999" ShowPaging="false" Context="context2">
+            <MatTableHeader>
+                <th style="width:20%">VIN</th>
+                <th style="width:35%">Make</th>
+                <th style="width:35%">Model</th>
+                <th style="width:10%">Actions</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context2.VIN</td>
+                <td>@context2.Make</td>
+                <td>@context2.Model</td>
+                <td>
+                    <MatButton Outlined="true" TrailingIcon="edit" Link="@($"/cars/edit/{@context2.VIN}")">Edit</MatButton>
+                    <MatButton Outlined="true" TrailingIcon="delete" @onclick="()=>Delete(context2)">Delete</MatButton>
+                </td>
+            </MatTableRow>
+        </MatTable>
+    </Authorized>
+    <NotAuthorized>
+        <h1>You are not authorized to see this component</h1>
+    </NotAuthorized>
+</AuthorizeView>
 
-<h1>Cars</h1>
-
-<MatTable Items="@cars" class="mat-elevation-z5" PageSize="9999" ShowPaging="false">
-    <MatTableHeader>
-        <th style="width:20%">VIN</th>
-        <th style="width:35%">Make</th>
-        <th style="width:35%">Model</th>
-        <th style="width:10%">Actions</th>
-    </MatTableHeader>
-    <MatTableRow>
-        <td>@context.VIN</td>
-        <td>@context.Make</td>
-        <td>@context.Model</td>
-        <td>
-            <MatButton Outlined="true" TrailingIcon="edit" Link="@($"/cars/edit/{@context.VIN}")">Edit</MatButton>
-            <MatButton Outlined="true" TrailingIcon="delete" @onclick="()=>Delete(context)">Delete</MatButton>
-        </td>
-    </MatTableRow>
-</MatTable>

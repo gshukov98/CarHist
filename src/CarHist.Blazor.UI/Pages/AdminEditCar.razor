@@ -1,22 +1,27 @@
 ﻿@page "/cars/edit/{Id}"
 
-<h3>AdminEditCar</h3>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <EditForm Model="EditCarInputModel" OnValidSubmit="Update" Context="context2">
+            <DataAnnotationsValidator />
 
- <EditForm Model="EditCarInputModel" OnValidSubmit="Update">
-        <DataAnnotationsValidator />
+            <MatStringField @bind-Value="@EditCarInputModel.VIN" Disabled="true" Label="VIN"></MatStringField>
+            <ValidationMessage For="@(() => EditCarInputModel.VIN)" />
 
-        <MatStringField @bind-Value="@EditCarInputModel.VIN" Disabled="true" Label="VIN"></MatStringField>
-        <ValidationMessage For="@(() => EditCarInputModel.VIN)" />
+            <MatStringField @bind-Value="@EditCarInputModel.Make" Label="Make"></MatStringField>
+            <ValidationMessage For="@(() => EditCarInputModel.Make)" />
 
-        <MatStringField @bind-Value="@EditCarInputModel.Make" Label="Make"></MatStringField>
-        <ValidationMessage For="@(() => EditCarInputModel.Make)" />
+            <MatStringField @bind-Value="@EditCarInputModel.Model" Label="Model"></MatStringField>
+            <ValidationMessage For="@(() => EditCarInputModel.Model)" />
 
-        <MatStringField @bind-Value="@EditCarInputModel.Model" Label="Model"></MatStringField>
-        <ValidationMessage For="@(() => EditCarInputModel.Model)" />
+            <MatStringField @bind-Value="@EditCarInputModel.EngineType" Label="Engine Type"></MatStringField>
+            <ValidationMessage For="@(() => EditCarInputModel.EngineType)" />
 
-        <MatStringField @bind-Value="@EditCarInputModel.EngineType" Label="Engine Type"></MatStringField>
-        <ValidationMessage For="@(() => EditCarInputModel.EngineType)" />
+            <MatButton class="btn btn-primary" Type="submit" Raised="true">Update</MatButton>
 
-        <MatButton class="btn btn-primary" Type="submit" Raised="true">Update</MatButton>
-
-    </EditForm>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <h1>You are not authorized to see this component</h1>
+    </NotAuthorized>
+</AuthorizeView>
