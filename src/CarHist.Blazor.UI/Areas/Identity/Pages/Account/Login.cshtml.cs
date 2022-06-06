@@ -8,10 +8,12 @@ namespace CarHist.Blazor.UI.Areas.Identity.Pages
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -36,6 +38,9 @@ namespace CarHist.Blazor.UI.Areas.Identity.Pages
                 {
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     var roles = await _signInManager.UserManager.GetRolesAsync(user);
+
+                    _logger.LogInformation($"USER ROLES: {string.Join(",", roles)}");
+
                     return LocalRedirect(ReturnUrl);
                 }
             }
