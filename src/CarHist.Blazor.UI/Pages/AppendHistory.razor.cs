@@ -47,7 +47,7 @@ public partial class AppendHistory : ComponentBase
 
         hubConnection.On<string, string>("CarHistoryAppended", (carId, name) =>
         {
-            history = CarHistoryProvider.GetCarByVIN(Id).ToList();
+            history = CarHistoryProvider.GetCarByVIN(CarId.Parse(carId)).ToList();
 
             StateHasChanged();
         });
