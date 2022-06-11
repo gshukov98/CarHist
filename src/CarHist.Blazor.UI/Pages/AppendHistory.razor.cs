@@ -5,12 +5,15 @@ using CarHist.Cars;
 using Elders.Cronus;
 using Elders.Cronus.MessageProcessing;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CarHist.Blazor.UI.Pages;
 
 public partial class AppendHistory : ComponentBase
 {
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private HubConnection hubConnection;
 
     [Inject]
@@ -24,6 +27,8 @@ public partial class AppendHistory : ComponentBase
 
     [Inject]
     protected IPublisher<ICommand> Publisher { get; set; }
+
+    private string CurrentUserName { get; set; } = "Test Company";
 
     private CarId Id;
 
@@ -39,6 +44,9 @@ public partial class AppendHistory : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
+        AuthenticationState auth = authenticationStateTask.GetAwaiter().GetResult();
+        CurrentUserName = auth.User.Identity.Name;
+
         cars = CarsProvider.GetCars().ToList();
         hubConnection = new HubConnectionBuilder()
             .WithUrl("http://127.0.0.1:17677" + "/hub/cars")
@@ -81,7 +89,7 @@ public partial class AppendHistory : ComponentBase
 
     public void Insert()
     {
-        var command = new Cars.Commands.AppendHistory(Id, AppendHistoryInputModel.Type, AppendHistoryInputModel.Description, "Test Company");
+        var command = new Cars.Commands.AppendHistory(Id, AppendHistoryInputModel.Type, AppendHistoryInputModel.Description, CurrentUserName);
 
         Publisher.Publish(command);
 
