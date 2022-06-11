@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using System.Security.Claims
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">CarHist.Blazor.UI</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -7,42 +8,106 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+<AuthorizeView Roles="Admin,User">
+    <Authorized>
+        @if (IsAdmin)
+        {
+            <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+                <nav class="flex-column">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="addCar">
+                            <span class="oi oi-badge" aria-hidden="true"></span> New car
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="cars">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Cars
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="cars/appendhistory">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Append History
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/identity/account/logout">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
+                        </NavLink>
+                    </div>
+                </nav>
+            </div>
+        }
+        else
+        {
+            <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+                <nav class="flex-column">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="addCar">
+                            <span class="oi oi-badge" aria-hidden="true"></span> New car
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="cars/appendhistory">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Append History
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/identity/account/logout">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
+                        </NavLink>
+                    </div>
+                </nav>
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <nav class="flex-column">
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/identity/account/login">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                    </NavLink>
+                </div>
+            </nav>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/identity/account/login">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="addCar">
-                <span class="oi oi-badge" aria-hidden="true"></span> New car
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="cars">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Cars
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="cars/appendhistory">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Append History
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/identity/account/logout">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+    </NotAuthorized>
+</AuthorizeView>
 @code {
+
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private bool IsAdmin { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        var auth = authenticationStateTask.GetAwaiter().GetResult();
+        var user = auth.User;
+        var roles = user.FindAll(ClaimTypes.Role);
+
+        foreach (var role in roles)
+        {
+            if (role.Value.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                IsAdmin = true;
+        }
+
+        return base.OnInitializedAsync();
+    }
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
